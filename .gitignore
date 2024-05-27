@@ -1,2 +1,6 @@
 .terraform
 terraform.tfstate
+
+__pycache__
+.pytest_cache
+test-output.xml

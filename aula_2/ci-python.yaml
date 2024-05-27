@@ -1,0 +1,14 @@
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+    displayName: "Checkout"
+
+  - task: UsePythonVersion@0
+    displayName: "Use Python 3.x"
+    inputs:
+      versionSpec: "3.x"
+      addToPath: true
+      architecture: "x64"
+## requirements, pylint, pytest
