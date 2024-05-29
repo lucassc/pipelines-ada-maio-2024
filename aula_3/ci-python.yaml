@@ -1,0 +1,47 @@
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+    displayName: "Checkout"
+
+  - task: UsePythonVersion@0
+    displayName: "Use Python 3.x"
+    inputs:
+      versionSpec: "3.x"
+      addToPath: true
+      architecture: "x64"
+
+  - bash: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: Install dependencies
+    workingDirectory: $(System.DefaultWorkingDirectory)/aula_3/app
+
+  - bash: |
+      pip install pylint
+      pylint --ignore-patterns "test.*py" .
+    displayName: Run lint
+    workingDirectory: $(System.DefaultWorkingDirectory)/aula_3/app
+
+  - bash: |
+      pip install pytest
+      pytest
+    displayName: Run unit tests
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: "JUnit"
+      testResultsFiles: "**/TEST-*.xml"
+      searchFolder: $(System.DefaultWorkingDirectory)
+    condition: succeededOrFailed()
+    displayName: Upload test results
+
+  - task: Docker@2
+    condition: and(succeeded(), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/main'))
+    inputs:
+      command: "build"
+      addPipelineData: false
+      addBaseImageData: false
+      dockerFile: $(Build.Repository.LocalPath)/aula_3/app/Dockerfile
+      buildContext: $(Build.Repository.LocalPath)/aula_3/app/
