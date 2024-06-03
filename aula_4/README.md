@@ -10,4 +10,3 @@
 - Service connections
 - Jobs e Stages
 - Environments
-- Releases

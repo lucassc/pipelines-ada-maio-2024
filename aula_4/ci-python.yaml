@@ -1,0 +1,60 @@
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: stageCI
+    displayName: "CI"
+    jobs:
+      - job: runCI
+        displayName: "Run Python CI"
+        steps:
+          - checkout: self
+            displayName: "Checkout"
+
+          - task: UsePythonVersion@0
+            displayName: "Use Python 3.x"
+            inputs:
+              versionSpec: "3.x"
+              addToPath: true
+              architecture: "x64"
+
+          - bash: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install dependencies
+            workingDirectory: $(System.DefaultWorkingDirectory)/aula_4/app
+
+          - bash: |
+              pip install pylint
+              pylint --ignore-patterns "test.*py" .
+            displayName: Run lint
+            workingDirectory: $(System.DefaultWorkingDirectory)/aula_4/app
+
+          - bash: |
+              pip install pytest
+              pytest --junitxml=test-output.xml
+            displayName: Run unit tests
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/test-*.xml"
+              searchFolder: $(System.DefaultWorkingDirectory)
+            condition: succeededOrFailed()
+            displayName: Upload test results
+
+      - job: dockerBuild
+        displayName: "Docker Build"
+        dependsOn: runCI
+        condition: and(succeeded(), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/main'))
+        steps:
+          - checkout: self
+            displayName: "Checkout"
+
+          - task: Docker@2
+            inputs:
+              command: "build"
+              addPipelineData: false
+              addBaseImageData: false
+              dockerFile: $(Build.Repository.LocalPath)/aula_4/app/Dockerfile
+              buildContext: $(Build.Repository.LocalPath)/aula_4/app/
