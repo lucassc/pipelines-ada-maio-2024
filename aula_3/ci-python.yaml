@@ -26,13 +26,13 @@ steps:
 
   - bash: |
       pip install pytest
-      pytest
+      pytest --junitxml=test-output.xml
     displayName: Run unit tests
 
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: "JUnit"
-      testResultsFiles: "**/TEST-*.xml"
+      testResultsFiles: "**/test-*.xml"
       searchFolder: $(System.DefaultWorkingDirectory)
     condition: succeededOrFailed()
     displayName: Upload test results
