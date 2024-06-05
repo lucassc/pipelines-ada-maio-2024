@@ -1,0 +1,29 @@
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+name: "Aula 5 - Terraform CI"
+
+jobs:
+  terraform-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: "Terraform Init"
+        run: terraform init
+        working-directory: ./aula_5/terraform
+
+      - name: "Terraform fmt"
+        run: terraform fmt -check
+        working-directory: ./aula_5/terraform
+
+      - name: "Terraform validate"
+        run: terraform validate
+        working-directory: ./aula_5/terraform

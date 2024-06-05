@@ -1,5 +1,6 @@
 on:
   workflow_dispatch:
+    push:
     inputs:
       project:
         description: "Project Name"
