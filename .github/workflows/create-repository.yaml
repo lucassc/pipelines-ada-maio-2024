@@ -1,0 +1,25 @@
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      repositoryName:
+        description: "Repository Name"
+        required: true
+      project:
+        description: "Project Name"
+        required: true
+      grupoRevisores:
+        description: "Nome do grupo de revisores"
+        required: true
+        type: choice
+        options:
+          - DevOps
+
+name: "Create Azure DevOps Repository"
+
+jobs:
+  create-repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
