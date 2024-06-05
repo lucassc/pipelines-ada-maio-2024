@@ -13,14 +13,11 @@ Implementar um pipeline de CI/CD utilizando a ferramenta que você preferir para
 1. **Integração e Entrega Contínua**:
 
 - Configurar as pipelines que execute testes automáticos, build da imagem Docker e push para um registro de containers.
-- Configurar as pipelines que execute validações e deploy da infraestrutura.
 - Implementar gatilhos de build baseados em mudanças no repositório Git.
+- Implantar a aplicação no ambiente (Kubernetes, AWS, Azure, Container Apps. Você pode escolher onde o deploy será realizado).
+- Configurar as pipelines que execute validações e deploy da infraestrutura.
 
-2. **Monitoramento e Qualidade do Código**:
-
-- Integrar SonarQube no pipeline para análise contínua da qualidade do código.
-
-5. **Documentação**:
+2. **Documentação**:
 
 - Preparar uma documentação explicando cada parte do pipeline.
 - Incluir instruções detalhadas sobre como configurar e executar os pipelines em ambientes de desenvolvimento e produção.
@@ -30,6 +27,7 @@ Implementar um pipeline de CI/CD utilizando a ferramenta que você preferir para
 - Bloquear deploy até que seja aprovado. O aprovador pode ser você mesmo.
 - Enviar notificação para alguma ferramenta (Teams, Slack, WhatsApp, ...) quando um deploy finalizar, com falha ou sucesso.
 - Deploy para mais de um ambiente
+- Integrar SonarQube no pipeline para análise contínua da qualidade do código.
 
 ## Entrega
 
