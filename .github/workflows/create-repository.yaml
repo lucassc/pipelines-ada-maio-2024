@@ -1,5 +1,4 @@
 on:
-  push:
   workflow_dispatch:
     inputs:
       repositoryName:
@@ -23,3 +22,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: "OpenTofu - Setup Tofu"
+        uses: opentofu/setup-opentofu@v1.0.3
