@@ -1,18 +1,23 @@
 on:
   workflow_dispatch:
     inputs:
-      repositoryName:
-        description: "Repository Name"
-        required: true
       project:
         description: "Project Name"
+        required: true
+        default: "ada_pipelines_maio"
+      repositoryName:
+        description: "Repository Name"
+        type: string
         required: true
       grupoRevisores:
         description: "Nome do grupo de revisores"
         required: true
         type: choice
+        default: "Contributors"
         options:
           - DevOps
+          - Contributors
+          - CreditoTeam
 
 name: "Create Azure DevOps Repository"
 
@@ -23,9 +28,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+      - uses: hashicorp/setup-terraform@v2
+        name: Setup Terraform
 
       - name: "Terraform Init"
         run: terraform init
         working-directory: ./aula_5/terraform
+
+      - name: "Terraform Init"
+        run: terraform apply -auto-approve -var="repository_name=${{ inputs.repositoryName }}"
+        working-directory: ./aula_5/terraform
+        env:
+          AZDO_ORG_SERVICE_URL: ${{ vars.AZDO_ORG_SERVICE_URL }}
+          AZDO_PERSONAL_ACCESS_TOKEN: ${{ secrets.AZDO_PERSONAL_ACCESS_TOKEN }}
+          TF_VAR_project_name: ${{ inputs.project }}
