@@ -1,6 +1,7 @@
 locals {
-  full_default_branch_name = "refs/heads/${var.default_branch1}"
+  full_default_branch_name = "refs/heads/${var.default_branch}"
 }
+
 
 resource "azuredevops_git_repository" "repository" {
   project_id     = data.azuredevops_project.project.id
