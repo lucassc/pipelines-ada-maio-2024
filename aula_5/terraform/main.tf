@@ -1,5 +1,5 @@
 locals {
-  full_default_branch_name = "refs/heads/${var.default_branch}"
+  full_default_branch_name = "refs/heads/${var.default_branch1}"
 }
 
 
