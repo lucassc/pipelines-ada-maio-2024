@@ -3,8 +3,9 @@ locals {
 }
 
 resource "azuredevops_git_repository" "repository" {
-  project_id = data.azuredevops_project.project.id
-  name       = var.repository_name
+  project_id     = data.azuredevops_project.project.id
+  name           = var.repository_name
+  default_branch = var.default_branch
   initialization {
     init_type = "Clean"
   }

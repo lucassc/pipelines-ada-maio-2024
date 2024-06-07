@@ -23,6 +23,7 @@ name: "Aula 5 - Create Azure DevOps Repository"
 
 jobs:
   create-repository:
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -35,11 +36,12 @@ jobs:
         run: terraform init
         working-directory: ./aula_5/terraform
 
-      - name: "Terraform Init"
-        run: terraform apply -auto-approve -var="repository_name=${{ inputs.repositoryName }}"
+      - name: "Terraform Apply"
+        run: terraform apply -auto-approve -input=false -var="repository_name=${{ inputs.repositoryName }}"
         if: github.event_name == 'workflow_dispatch'
         working-directory: ./aula_5/terraform
         env:
           AZDO_ORG_SERVICE_URL: ${{ vars.AZDO_ORG_SERVICE_URL }}
           AZDO_PERSONAL_ACCESS_TOKEN: ${{ secrets.AZDO_PERSONAL_ACCESS_TOKEN }}
           TF_VAR_project_name: ${{ inputs.project }}
+          TF_VAR_reviewers_group_name: ${{ inputs.grupoRevisores }}
