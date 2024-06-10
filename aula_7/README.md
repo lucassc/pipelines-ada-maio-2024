@@ -4,123 +4,26 @@
 | ------------------------ |
 | [Links](./links_aula.md) |
 
-## Comandos
+## Conteúdo
 
-No Jenkins, especialmente quando você está definindo pipelines usando um `Jenkinsfile`, há uma variedade de comandos que você pode usar. Aqui estão alguns dos comandos mais comuns:
+Siga o passo a passo no material didático, [ADA: Jenkins](https://lms.ada.tech/student/topics/by-class-id/109466b6-f9c2-4aaa-861e-ba5c3edee4cb/by-module-id/7e4fa28a-be7b-4b00-95e1-2c8e2c8557f6), para rodar o seu Jenkins. Durante a aula utilizamos a instalação com Docker
 
-### Comandos Básicos
+### Docker
 
-1. **sh**:
+```bash
+docker volume create jenkins_home
 
-   - Executa comandos de shell. É usado principalmente para executar scripts ou comandos do sistema operacional.
+docker container run --name jenkins -d --restart=always -p 8080:8080 -p 50000:50000 -u 0 -v jenkins_home:/var/jenkins_home jenkins/jenkins
 
-   ```groovy
-   sh 'echo "Hello, World!"'
-   ```
+## Senha inicial
 
-2. **echo**:
-   - Imprime uma mensagem no console de saída.
-   ```groovy
-   echo 'Hello, World!'
-   ```
+docker container exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
 
-### Comandos para Controle de Fluxo
+### Pipeline com código no GitHub
 
-3. **input**:
+Para a criação de uma pipeline confira o PDF CreatePipelineJobforGitHubRepositoryinJenkins.pdf com o passo a passo.
 
-   - Pausa o pipeline e espera por uma entrada manual.
+### Comandos
 
-   ```groovy
-   input 'Aprovar deploy?'
-   ```
-
-4. **timeout**:
-   - Define um limite de tempo para uma etapa ou bloco.
-   ```groovy
-   timeout(time: 5, unit: 'MINUTES') {
-       sh 'sleep 10'
-   }
-   ```
-
-### Comandos para Manipulação de Arquivos e Ambientes
-
-5. **readFile**:
-
-   - Lê o conteúdo de um arquivo.
-
-   ```groovy
-   def content = readFile 'myfile.txt'
-   ```
-
-6. **writeFile**:
-   - Escreve o conteúdo em um arquivo.
-   ```groovy
-   writeFile(file: 'myfile.txt', text: 'Hello, World!')
-   ```
-
-### Comandos para Gerenciamento de Etapas e Stages
-
-7. **stage**:
-
-   - Define uma nova etapa no pipeline.
-
-   ```groovy
-   stage('Build') {
-       sh 'mvn clean install'
-   }
-   ```
-
-8. **parallel**:
-   - Executa várias etapas em paralelo.
-   ```groovy
-   parallel(
-       firstBranch: {
-           sh 'echo "First branch"'
-       },
-       secondBranch: {
-           sh 'echo "Second branch"'
-       }
-   )
-   ```
-
-### Comandos para Manipulação de Jobs e Pipelines
-
-9. **build**:
-
-   - Dispara outro job ou pipeline.
-
-   ```groovy
-   build job: 'another-job'
-   ```
-
-10. **catchError**:
-    - Captura erros de uma etapa específica.
-    ```groovy
-    catchError {
-        sh 'exit 1'
-    }
-    ```
-
-### Comandos para Publicação e Relatórios
-
-11. **junit**:
-
-    - Publica resultados de testes JUnit.
-
-    ```groovy
-    junit 'target/surefire-reports/*.xml'
-    ```
-
-12. **archiveArtifacts**:
-
-    - Arquiva artefatos para serem usados posteriormente.
-
-    ```groovy
-    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-    ```
-
-13. **publishHTML**:
-    - Publica relatórios HTML.
-    ```groovy
-    publishHTML([reportDir: 'reports', reportFiles: 'index.html', reportName: 'HTML Report'])
-    ```
+Para ver mais comendas, confira a [página aqui](./jenkins-commands.md).

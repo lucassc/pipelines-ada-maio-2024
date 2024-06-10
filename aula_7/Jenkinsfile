@@ -19,6 +19,7 @@ pipeline {
                 sh'pylint --ignore-patterns "test.*py" ./aula_3/app'
                 sh'pip install --break-system-packages pytest'
                 sh'pytest aula_4/'
+            }
         }
         stage('Build') {
             steps {
