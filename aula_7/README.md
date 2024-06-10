@@ -6,9 +6,11 @@
 
 ## Conteúdo
 
+### Jenkins
+
 Siga o passo a passo no material didático, [ADA: Jenkins](https://lms.ada.tech/student/topics/by-class-id/109466b6-f9c2-4aaa-861e-ba5c3edee4cb/by-module-id/7e4fa28a-be7b-4b00-95e1-2c8e2c8557f6), para rodar o seu Jenkins. Durante a aula utilizamos a instalação com Docker
 
-### Docker
+#### Docker
 
 ```bash
 docker volume create jenkins_home
@@ -20,10 +22,18 @@ docker container run --name jenkins -d --restart=always -p 8080:8080 -p 50000:50
 docker container exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
-### Pipeline com código no GitHub
+#### Pipeline com código no GitHub
 
 Para a criação de uma pipeline confira o PDF CreatePipelineJobforGitHubRepositoryinJenkins.pdf com o passo a passo.
 
-### Comandos
+#### Comandos
 
 Para ver mais comendas, confira a [página aqui](./jenkins-commands.md).
+
+### SonarCloud
+
+Crie sua conta no [Sonar Cloud](https://www.sonarsource.com/products/sonarcloud/signup/)
+
+- [Analyze your repository with GitHub Actions](https://docs.sonarsource.com/sonarcloud/advanced-setup/ci-based-analysis/github-actions-for-sonarcloud/)
+- [Analyze your repository with Azure Pipelines](https://docs.sonarsource.com/sonarcloud/advanced-setup/ci-based-analysis/azure-pipelines/)
+- [Setting up Jenkins for SonarCloud integration](https://docs.sonarsource.com/sonarcloud/advanced-setup/ci-based-analysis/jenkins/global-setup/)
