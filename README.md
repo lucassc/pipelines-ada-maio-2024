@@ -8,4 +8,4 @@
 | [Aula 4](./aula_4/README.md)   |
 | [Aula 5](./aula_5/README.md)   |
 | [Aula 7](./aula_7/README.md)   |
-| [Projeto](./projeto/README.md) |
+| [Projeto](./projeto/README.md)  |
