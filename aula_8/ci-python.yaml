@@ -11,6 +11,13 @@ stages:
           - checkout: self
             displayName: "Checkout"
 
+          - task: SonarCloudPrepare@2
+            inputs:
+              SonarCloud: "sc-sonar"
+              organization: "lucasschwendlerwork"
+              scannerMode: "CLI"
+              configMode: "file"
+
           - task: UsePythonVersion@0
             displayName: "Use Python 3.x"
             inputs:
@@ -42,6 +49,14 @@ stages:
               searchFolder: $(System.DefaultWorkingDirectory)
             condition: succeededOrFailed()
             displayName: Upload test results
+
+          - task: SonarCloudAnalyze@2
+            inputs:
+              jdkversion: "JAVA_HOME_17_X64"
+
+          - task: SonarCloudPublish@2
+            inputs:
+              pollingTimeoutSec: "300"
 
       - job: dockerBuild
         displayName: "Docker Build"

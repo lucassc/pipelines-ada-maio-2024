@@ -7,6 +7,7 @@ from flask import Flask
 app = Flask(__name__)
 
 my_env = os.getenv('AMBIENTE')
+my_version = os.getenv('VERSAO')
 print(f'AMBIENTE={my_env}')
 
 @app.route('/')
@@ -22,6 +23,41 @@ def env():
     This function returns the environment name.
     """
     return f'AMBIENTE={my_env}'
+
+@app.route('/v2/AMBIENTE')
+def env_v2():
+    """ 
+    This function returns the environment name.
+    """
+    if my_env != "":
+        resultado = f'AMBIENTE={my_env}, VERSAO={my_version}'
+    else:
+        resultado = f'VERSAO={my_version}'
+
+    return resultado
+
+@app.route('/v3/AMBIENTE')
+def env_v3():
+    """ 
+    This function returns the environment name.
+    """
+    if my_env != "":
+        resultado = f'AMBIENTE={my_env}, VERSAO={my_version}'
+    else:
+        resultado = f'VERSAO={my_version}'
+    return resultado
+
+@app.route('/v4/AMBIENTE')
+def env_v4():
+    """ 
+    This function returns the environment name.
+    """
+    if my_env != "":
+        resultado = f'AMBIENTE={my_env}, VERSAO={my_version}'
+    else:
+        resultado = f'VERSAO={my_version}'
+
+    return resultado
 
 @app.route('/STARTED')
 def started():
